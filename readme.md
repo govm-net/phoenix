@@ -4,7 +4,7 @@
 
 ## Get started
 
-```
+```bash
 ignite chain serve
 ```
 
