@@ -1,0 +1,18 @@
+syntax = "proto3";
+package phoenix.phoenix;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/govm-net/phoenix/x/phoenix/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "phoenix/x/phoenix/Params";
+  option (gogoproto.equal) = true;
+
+  
+  uint64 shardId = 1 [(gogoproto.moretags) = "yaml:\"shard_id\""];
+  string proxy = 2 [(gogoproto.moretags) = "yaml:\"proxy\""];
+  uint64 vdf = 3 [(gogoproto.moretags) = "yaml:\"vdf\""];
+}
