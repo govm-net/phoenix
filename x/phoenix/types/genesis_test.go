@@ -26,6 +26,16 @@ func TestGenesisState_Validate(t *testing.T) {
 			},
 			valid: true,
 		},
+		{
+			desc:     "duplicated virtualBlock",
+			genState: &types.GenesisState{},
+			valid:    false,
+		},
+		{
+			desc:     "invalid virtualBlock count",
+			genState: &types.GenesisState{},
+			valid:    false,
+		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	}
 	for _, tc := range tests {

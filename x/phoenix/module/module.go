@@ -9,6 +9,7 @@ import (
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/log"
+	"github.com/cometbft/cometbft/crypto/tmhash"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -142,10 +143,63 @@ func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.Raw
 // It should be incremented on each consensus-breaking change introduced by the module.
 // To avoid wrong/empty versions, the initial version should be set to 1.
 func (AppModule) ConsensusVersion() uint64 { return 1 }
+func (am AppModule) getHeaderHash(ctx sdk.Context) []byte {
+	h := ctx.BlockHeader()
+	hd, err := am.cdc.Marshal(&h)
+	if err != nil {
+		return nil
+	}
+	return tmhash.Sum(hd)
+}
 
 // BeginBlock contains the logic that is automatically triggered at the beginning of each block.
 // The begin block implementation is optional.
-func (am AppModule) BeginBlock(_ context.Context) error {
+func (am AppModule) BeginBlock(goCtx context.Context) error {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	bid := ctx.BlockHeight()
+	fmt.Println("--------begin block:", bid)
+	if bid == 1 {
+		var vb types.VirtualBlock
+		// id=0, fill it
+		am.keeper.AppendVirtualBlock(ctx, vb)
+
+		vb.Header = am.getHeaderHash(ctx)
+		vb.Time = ctx.BlockTime().Unix()
+		if am.keeper.GetParams(ctx).ShardId > 1 {
+			vb.Parent = ctx.BlockHeader().AppHash
+		}
+		am.keeper.AppendVirtualBlock(ctx, vb)
+		return nil
+	}
+	lid := am.keeper.GetVirtualBlockCount(ctx)
+	last, found := am.keeper.GetVirtualBlock(ctx, lid-1)
+	if !found {
+		fmt.Println("not found the virtual block", lid-1)
+		return nil
+	}
+	now := ctx.BlockTime().Unix()
+	// one vitrual block per 10s
+	vbTime := last.Time + 10
+	if now < vbTime {
+		fmt.Println("skip", now, vbTime, now-vbTime)
+		return nil
+	}
+	var vb types.VirtualBlock
+
+	vb.Header = am.getHeaderHash(ctx)
+	vb.Time = vbTime
+
+	hd, err := am.cdc.Marshal(&last)
+	if err != nil {
+		return err
+	}
+	vb.Previous = tmhash.Sum(hd)
+	// parent/leftChild/rightChild
+	// if am.keeper.GetParams(ctx).ShardId > 1 {
+	// }
+	am.keeper.AppendVirtualBlock(ctx, vb)
+
 	return nil
 }
 

@@ -6,11 +6,7 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
-
-	_ "github.com/cosmos/cosmos-sdk/types/query"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
@@ -19,6 +15,9 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
+	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -115,35 +114,236 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+type QueryGetVirtualBlockRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetVirtualBlockRequest) Reset()         { *m = QueryGetVirtualBlockRequest{} }
+func (m *QueryGetVirtualBlockRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetVirtualBlockRequest) ProtoMessage()    {}
+func (*QueryGetVirtualBlockRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_24f89719455dd713, []int{2}
+}
+func (m *QueryGetVirtualBlockRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetVirtualBlockRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetVirtualBlockRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetVirtualBlockRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetVirtualBlockRequest.Merge(m, src)
+}
+func (m *QueryGetVirtualBlockRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetVirtualBlockRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetVirtualBlockRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetVirtualBlockRequest proto.InternalMessageInfo
+
+func (m *QueryGetVirtualBlockRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetVirtualBlockResponse struct {
+	VirtualBlock VirtualBlock `protobuf:"bytes,1,opt,name=VirtualBlock,proto3" json:"VirtualBlock"`
+}
+
+func (m *QueryGetVirtualBlockResponse) Reset()         { *m = QueryGetVirtualBlockResponse{} }
+func (m *QueryGetVirtualBlockResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetVirtualBlockResponse) ProtoMessage()    {}
+func (*QueryGetVirtualBlockResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_24f89719455dd713, []int{3}
+}
+func (m *QueryGetVirtualBlockResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetVirtualBlockResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetVirtualBlockResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetVirtualBlockResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetVirtualBlockResponse.Merge(m, src)
+}
+func (m *QueryGetVirtualBlockResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetVirtualBlockResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetVirtualBlockResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetVirtualBlockResponse proto.InternalMessageInfo
+
+func (m *QueryGetVirtualBlockResponse) GetVirtualBlock() VirtualBlock {
+	if m != nil {
+		return m.VirtualBlock
+	}
+	return VirtualBlock{}
+}
+
+type QueryAllVirtualBlockRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllVirtualBlockRequest) Reset()         { *m = QueryAllVirtualBlockRequest{} }
+func (m *QueryAllVirtualBlockRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllVirtualBlockRequest) ProtoMessage()    {}
+func (*QueryAllVirtualBlockRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_24f89719455dd713, []int{4}
+}
+func (m *QueryAllVirtualBlockRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllVirtualBlockRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllVirtualBlockRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllVirtualBlockRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllVirtualBlockRequest.Merge(m, src)
+}
+func (m *QueryAllVirtualBlockRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllVirtualBlockRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllVirtualBlockRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllVirtualBlockRequest proto.InternalMessageInfo
+
+func (m *QueryAllVirtualBlockRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllVirtualBlockResponse struct {
+	VirtualBlock []VirtualBlock      `protobuf:"bytes,1,rep,name=VirtualBlock,proto3" json:"VirtualBlock"`
+	Pagination   *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllVirtualBlockResponse) Reset()         { *m = QueryAllVirtualBlockResponse{} }
+func (m *QueryAllVirtualBlockResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllVirtualBlockResponse) ProtoMessage()    {}
+func (*QueryAllVirtualBlockResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_24f89719455dd713, []int{5}
+}
+func (m *QueryAllVirtualBlockResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllVirtualBlockResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllVirtualBlockResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllVirtualBlockResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllVirtualBlockResponse.Merge(m, src)
+}
+func (m *QueryAllVirtualBlockResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllVirtualBlockResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllVirtualBlockResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllVirtualBlockResponse proto.InternalMessageInfo
+
+func (m *QueryAllVirtualBlockResponse) GetVirtualBlock() []VirtualBlock {
+	if m != nil {
+		return m.VirtualBlock
+	}
+	return nil
+}
+
+func (m *QueryAllVirtualBlockResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "phoenix.phoenix.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "phoenix.phoenix.QueryParamsResponse")
+	proto.RegisterType((*QueryGetVirtualBlockRequest)(nil), "phoenix.phoenix.QueryGetVirtualBlockRequest")
+	proto.RegisterType((*QueryGetVirtualBlockResponse)(nil), "phoenix.phoenix.QueryGetVirtualBlockResponse")
+	proto.RegisterType((*QueryAllVirtualBlockRequest)(nil), "phoenix.phoenix.QueryAllVirtualBlockRequest")
+	proto.RegisterType((*QueryAllVirtualBlockResponse)(nil), "phoenix.phoenix.QueryAllVirtualBlockResponse")
 }
 
 func init() { proto.RegisterFile("phoenix/phoenix/query.proto", fileDescriptor_24f89719455dd713) }
 
 var fileDescriptor_24f89719455dd713 = []byte{
-	// 311 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x2e, 0xc8, 0xc8, 0x4f,
-	0xcd, 0xcb, 0xac, 0xd0, 0x87, 0xd1, 0x85, 0xa5, 0xa9, 0x45, 0x95, 0x7a, 0x05, 0x45, 0xf9, 0x25,
-	0xf9, 0x42, 0xfc, 0x50, 0x41, 0x3d, 0x28, 0x2d, 0x25, 0x98, 0x98, 0x9b, 0x99, 0x97, 0xaf, 0x0f,
-	0x26, 0x21, 0x6a, 0xa4, 0x44, 0xd2, 0xf3, 0xd3, 0xf3, 0xc1, 0x4c, 0x7d, 0x10, 0x0b, 0x2a, 0x2a,
-	0x93, 0x9e, 0x9f, 0x9f, 0x9e, 0x93, 0xaa, 0x9f, 0x58, 0x90, 0xa9, 0x9f, 0x98, 0x97, 0x97, 0x5f,
-	0x92, 0x58, 0x92, 0x99, 0x9f, 0x57, 0x0c, 0x95, 0xd5, 0x4a, 0xce, 0x2f, 0xce, 0xcd, 0x2f, 0xd6,
-	0x4f, 0x4a, 0x2c, 0x4e, 0x85, 0x58, 0xa8, 0x5f, 0x66, 0x98, 0x94, 0x5a, 0x92, 0x68, 0xa8, 0x5f,
-	0x90, 0x98, 0x9e, 0x99, 0x07, 0x56, 0x0c, 0x33, 0x09, 0xdd, 0x81, 0x05, 0x89, 0x45, 0x89, 0xb9,
-	0x50, 0x93, 0x94, 0x44, 0xb8, 0x84, 0x02, 0x41, 0xfa, 0x03, 0xc0, 0x82, 0x41, 0xa9, 0x85, 0xa5,
-	0xa9, 0xc5, 0x25, 0x4a, 0x81, 0x5c, 0xc2, 0x28, 0xa2, 0xc5, 0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x42,
-	0x56, 0x5c, 0x6c, 0x10, 0xcd, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0xdc, 0x46, 0xe2, 0x7a, 0x68, 0xfe,
-	0xd3, 0x83, 0x68, 0x70, 0xe2, 0x3c, 0x71, 0x4f, 0x9e, 0x61, 0xc5, 0xf3, 0x0d, 0x5a, 0x8c, 0x41,
-	0x50, 0x1d, 0x46, 0x6d, 0x8c, 0x5c, 0xac, 0x60, 0x33, 0x85, 0x6a, 0xb9, 0xd8, 0x20, 0xca, 0x84,
-	0x94, 0x31, 0xf4, 0x63, 0xba, 0x45, 0x4a, 0x05, 0xbf, 0x22, 0x88, 0xd3, 0x94, 0x34, 0x9a, 0x2e,
-	0x3f, 0x99, 0xcc, 0xa4, 0x24, 0xa4, 0xa0, 0x9f, 0x9e, 0x5f, 0x96, 0xab, 0x9b, 0x97, 0x5a, 0xa2,
-	0x8f, 0xdd, 0xdf, 0x4e, 0xae, 0x27, 0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91,
-	0x1c, 0xe3, 0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x10, 0xa5,
-	0x9d, 0x9e, 0x59, 0x92, 0x51, 0x9a, 0xa4, 0x97, 0x9c, 0x9f, 0x8b, 0x69, 0x0a, 0xc2, 0x9c, 0x92,
-	0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0xf8, 0x19, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x5c,
-	0xe5, 0x0e, 0x9c, 0x00, 0x02, 0x00, 0x00,
+	// 518 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x94, 0x41, 0x6f, 0xd3, 0x30,
+	0x14, 0xc7, 0xeb, 0x6e, 0x54, 0xc2, 0x20, 0x26, 0xcc, 0x24, 0x50, 0x37, 0xc2, 0xe4, 0x21, 0x36,
+	0xc6, 0x6a, 0x6b, 0x83, 0x13, 0xb7, 0x55, 0x82, 0x5e, 0xb7, 0x1c, 0x38, 0x70, 0x41, 0x4e, 0x6b,
+	0x79, 0x16, 0x49, 0x9c, 0x35, 0x6e, 0xc5, 0x84, 0x76, 0xe1, 0x13, 0x20, 0xf1, 0x01, 0x10, 0x37,
+	0x8e, 0xfb, 0x18, 0x3b, 0x70, 0x98, 0xc4, 0x85, 0x13, 0x42, 0x2d, 0x12, 0x5f, 0x03, 0xc5, 0x76,
+	0xb5, 0xa4, 0x49, 0x60, 0xda, 0xa5, 0xb6, 0x9e, 0xdf, 0xfb, 0xff, 0x7f, 0xf6, 0x7b, 0x0d, 0x5c,
+	0x49, 0x0e, 0x15, 0x8f, 0xe5, 0x3b, 0x3a, 0x5b, 0x8f, 0x46, 0x7c, 0x78, 0x4c, 0x92, 0xa1, 0xd2,
+	0x0a, 0x2d, 0xb9, 0x20, 0x71, 0x6b, 0xfb, 0x36, 0x8b, 0x64, 0xac, 0xa8, 0xf9, 0xb5, 0x39, 0xed,
+	0x65, 0xa1, 0x84, 0x32, 0x5b, 0x9a, 0xed, 0x5c, 0x74, 0x55, 0x28, 0x25, 0x42, 0x4e, 0x59, 0x22,
+	0x29, 0x8b, 0x63, 0xa5, 0x99, 0x96, 0x2a, 0x4e, 0xdd, 0xe9, 0x56, 0x5f, 0xa5, 0x91, 0x4a, 0x69,
+	0xc0, 0x52, 0x6e, 0x0d, 0xe9, 0x78, 0x27, 0xe0, 0x9a, 0xed, 0xd0, 0x84, 0x09, 0x19, 0x9b, 0xe4,
+	0x99, 0xd2, 0x3c, 0x60, 0xc2, 0x86, 0x2c, 0x9a, 0x29, 0xad, 0xcf, 0x9f, 0x8e, 0xe5, 0x50, 0x8f,
+	0x58, 0xf8, 0x26, 0x08, 0x55, 0xff, 0xad, 0x4d, 0xc2, 0xcb, 0x10, 0x1d, 0x64, 0x26, 0xfb, 0xa6,
+	0xd2, 0xe7, 0x47, 0x23, 0x9e, 0x6a, 0x7c, 0x00, 0xef, 0x14, 0xa2, 0x69, 0xa2, 0xe2, 0x94, 0xa3,
+	0xe7, 0xb0, 0x65, 0x1d, 0xee, 0x81, 0x35, 0xb0, 0x79, 0x63, 0xf7, 0x2e, 0x99, 0x7b, 0x04, 0x62,
+	0x0b, 0xba, 0xd7, 0xcf, 0x7e, 0x3e, 0x68, 0x7c, 0xfd, 0x73, 0xba, 0x05, 0x7c, 0x57, 0x81, 0x3b,
+	0x70, 0xc5, 0x48, 0xf6, 0xb8, 0x7e, 0x65, 0x39, 0xba, 0x19, 0x86, 0x73, 0x44, 0xb7, 0x60, 0x53,
+	0x0e, 0x8c, 0xec, 0xa2, 0xdf, 0x94, 0x03, 0x2c, 0xe0, 0x6a, 0x75, 0xba, 0x43, 0xe9, 0xc1, 0x9b,
+	0xf9, 0xb8, 0x03, 0xba, 0x5f, 0x02, 0xca, 0x27, 0x75, 0x17, 0x33, 0x2c, 0xbf, 0x50, 0x88, 0xb9,
+	0xe3, 0xda, 0x0b, 0xc3, 0x2a, 0xae, 0x97, 0x10, 0x5e, 0x3c, 0xbb, 0x73, 0x79, 0x44, 0x6c, 0x8f,
+	0x48, 0xd6, 0x23, 0x62, 0x87, 0xc2, 0xf5, 0x88, 0xec, 0x33, 0xc1, 0x5d, 0xad, 0x9f, 0xab, 0xc4,
+	0xa7, 0xc0, 0x5d, 0xa8, 0xe4, 0x53, 0x7b, 0xa1, 0x85, 0x2b, 0x5d, 0x08, 0xf5, 0x0a, 0xc4, 0x4d,
+	0x43, 0xbc, 0xf1, 0x5f, 0x62, 0x4b, 0x91, 0x47, 0xde, 0xfd, 0xb6, 0x00, 0xaf, 0x19, 0x64, 0x74,
+	0x02, 0x5b, 0xb6, 0xb1, 0x68, 0xbd, 0xc4, 0x53, 0x9e, 0x9e, 0xf6, 0xc3, 0x7f, 0x27, 0x59, 0x2b,
+	0xbc, 0xf9, 0xe1, 0xfb, 0xef, 0x4f, 0x4d, 0x8c, 0xd6, 0xa8, 0x50, 0xe3, 0xa8, 0x13, 0x73, 0x4d,
+	0xab, 0xc7, 0x19, 0x7d, 0x01, 0xc5, 0xb7, 0x41, 0xdb, 0xd5, 0x06, 0xd5, 0xa3, 0xd5, 0xee, 0x5c,
+	0x32, 0xdb, 0x71, 0x3d, 0x33, 0x5c, 0x04, 0x6d, 0xd7, 0x73, 0x15, 0xfe, 0x48, 0xf4, 0xbd, 0x1c,
+	0x9c, 0xa0, 0xcf, 0x00, 0x2e, 0xe5, 0xe5, 0xf6, 0xc2, 0xb0, 0x0e, 0xb3, 0x7a, 0xd2, 0xea, 0x30,
+	0x6b, 0xe6, 0x05, 0x53, 0x83, 0xf9, 0x18, 0x6d, 0x5c, 0x12, 0xb3, 0xfb, 0xe2, 0x6c, 0xe2, 0x81,
+	0xf3, 0x89, 0x07, 0x7e, 0x4d, 0x3c, 0xf0, 0x71, 0xea, 0x35, 0xce, 0xa7, 0x5e, 0xe3, 0xc7, 0xd4,
+	0x6b, 0xbc, 0x7e, 0x22, 0xa4, 0x3e, 0x1c, 0x05, 0xa4, 0xaf, 0xa2, 0xb2, 0xd8, 0x85, 0x9c, 0x3e,
+	0x4e, 0x78, 0x1a, 0xb4, 0xcc, 0x77, 0xe3, 0xe9, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xe1, 0x07,
+	0x10, 0x4f, 0x1d, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -160,6 +360,9 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of VirtualBlock items.
+	VirtualBlock(ctx context.Context, in *QueryGetVirtualBlockRequest, opts ...grpc.CallOption) (*QueryGetVirtualBlockResponse, error)
+	VirtualBlockAll(ctx context.Context, in *QueryAllVirtualBlockRequest, opts ...grpc.CallOption) (*QueryAllVirtualBlockResponse, error)
 }
 
 type queryClient struct {
@@ -179,10 +382,31 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) VirtualBlock(ctx context.Context, in *QueryGetVirtualBlockRequest, opts ...grpc.CallOption) (*QueryGetVirtualBlockResponse, error) {
+	out := new(QueryGetVirtualBlockResponse)
+	err := c.cc.Invoke(ctx, "/phoenix.phoenix.Query/VirtualBlock", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) VirtualBlockAll(ctx context.Context, in *QueryAllVirtualBlockRequest, opts ...grpc.CallOption) (*QueryAllVirtualBlockResponse, error) {
+	out := new(QueryAllVirtualBlockResponse)
+	err := c.cc.Invoke(ctx, "/phoenix.phoenix.Query/VirtualBlockAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of VirtualBlock items.
+	VirtualBlock(context.Context, *QueryGetVirtualBlockRequest) (*QueryGetVirtualBlockResponse, error)
+	VirtualBlockAll(context.Context, *QueryAllVirtualBlockRequest) (*QueryAllVirtualBlockResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -191,6 +415,12 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) VirtualBlock(ctx context.Context, req *QueryGetVirtualBlockRequest) (*QueryGetVirtualBlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VirtualBlock not implemented")
+}
+func (*UnimplementedQueryServer) VirtualBlockAll(ctx context.Context, req *QueryAllVirtualBlockRequest) (*QueryAllVirtualBlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VirtualBlockAll not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -215,6 +445,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_VirtualBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetVirtualBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).VirtualBlock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/phoenix.phoenix.Query/VirtualBlock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).VirtualBlock(ctx, req.(*QueryGetVirtualBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_VirtualBlockAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllVirtualBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).VirtualBlockAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/phoenix.phoenix.Query/VirtualBlockAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).VirtualBlockAll(ctx, req.(*QueryAllVirtualBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "phoenix.phoenix.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -222,6 +488,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "VirtualBlock",
+			Handler:    _Query_VirtualBlock_Handler,
+		},
+		{
+			MethodName: "VirtualBlockAll",
+			Handler:    _Query_VirtualBlockAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -284,6 +558,151 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetVirtualBlockRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetVirtualBlockRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetVirtualBlockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetVirtualBlockResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetVirtualBlockResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetVirtualBlockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.VirtualBlock.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllVirtualBlockRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllVirtualBlockRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllVirtualBlockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllVirtualBlockResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllVirtualBlockResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllVirtualBlockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.VirtualBlock) > 0 {
+		for iNdEx := len(m.VirtualBlock) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.VirtualBlock[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -312,6 +731,61 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetVirtualBlockRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetVirtualBlockResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.VirtualBlock.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryAllVirtualBlockRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllVirtualBlockResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.VirtualBlock) > 0 {
+		for _, e := range m.VirtualBlock {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	return n
 }
 
@@ -430,6 +904,364 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetVirtualBlockRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetVirtualBlockRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetVirtualBlockRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetVirtualBlockResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetVirtualBlockResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetVirtualBlockResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VirtualBlock", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.VirtualBlock.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllVirtualBlockRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllVirtualBlockRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllVirtualBlockRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllVirtualBlockResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllVirtualBlockResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllVirtualBlockResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VirtualBlock", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VirtualBlock = append(m.VirtualBlock, VirtualBlock{})
+			if err := m.VirtualBlock[len(m.VirtualBlock)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
