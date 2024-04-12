@@ -55,14 +55,14 @@ func (h *ProposalHandler) PrepareProposal() sdk.PrepareProposalHandler {
 			}, nil
 		}
 		var vb types.VirtualBlock
+		var err error
 
 		vb.Time = vbTime
 
-		hd, err := last.Marshal()
+		vb.Previous, err = last.Hash()
 		if err != nil {
 			return nil, err
 		}
-		vb.Previous = tmhash.Sum(hd)
 		vb.Header = getHeaderHash(ctx)
 
 		bz, err := json.Marshal(vb)
