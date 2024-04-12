@@ -19,3 +19,24 @@ faucet:
 validators:
 - name: alice
   bonded: 100000000stake
+
+genesis:
+  genesis_time: "2024-03-26T08:00:00.000000Z"
+  consensus:
+    params:
+      abci:
+        vote_extensions_enable_height: "1"
+  app_state:
+    phoenix:
+      params:
+        proxy: proxy
+        shardId: "1"
+        vdf: 1000
+      virtualBlockCount: 2
+      virtualBlockList:
+      - id: 0
+      - id: 1
+        time: 1711440000
+        parent: dV5iFmKiCIkCO24UJTBRSEFyrCELedW0Jk89M8hQWVs=
+
+

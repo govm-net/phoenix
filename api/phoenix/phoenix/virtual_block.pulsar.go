@@ -3,14 +3,13 @@ package phoenix
 
 import (
 	fmt "fmt"
-	io "io"
-	reflect "reflect"
-	sync "sync"
-
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	io "io"
+	reflect "reflect"
+	sync "sync"
 )
 
 var (
@@ -109,44 +108,44 @@ func (x *fastReflection_VirtualBlock) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
-	if x.Time != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.Time)
+	if x.Time != int64(0) {
+		value := protoreflect.ValueOfInt64(x.Time)
 		if !f(fd_VirtualBlock_time, value) {
 			return
 		}
 	}
-	if x.Header != "" {
-		value := protoreflect.ValueOfString(x.Header)
+	if len(x.Header) != 0 {
+		value := protoreflect.ValueOfBytes(x.Header)
 		if !f(fd_VirtualBlock_header, value) {
 			return
 		}
 	}
-	if x.Previous != "" {
-		value := protoreflect.ValueOfString(x.Previous)
+	if len(x.Previous) != 0 {
+		value := protoreflect.ValueOfBytes(x.Previous)
 		if !f(fd_VirtualBlock_previous, value) {
 			return
 		}
 	}
-	if x.Parent != "" {
-		value := protoreflect.ValueOfString(x.Parent)
+	if len(x.Parent) != 0 {
+		value := protoreflect.ValueOfBytes(x.Parent)
 		if !f(fd_VirtualBlock_parent, value) {
 			return
 		}
 	}
-	if x.LeftChild != "" {
-		value := protoreflect.ValueOfString(x.LeftChild)
+	if len(x.LeftChild) != 0 {
+		value := protoreflect.ValueOfBytes(x.LeftChild)
 		if !f(fd_VirtualBlock_leftChild, value) {
 			return
 		}
 	}
-	if x.RightChild != "" {
-		value := protoreflect.ValueOfString(x.RightChild)
+	if len(x.RightChild) != 0 {
+		value := protoreflect.ValueOfBytes(x.RightChild)
 		if !f(fd_VirtualBlock_rightChild, value) {
 			return
 		}
 	}
-	if x.VdfProof != "" {
-		value := protoreflect.ValueOfString(x.VdfProof)
+	if len(x.VdfProof) != 0 {
+		value := protoreflect.ValueOfBytes(x.VdfProof)
 		if !f(fd_VirtualBlock_vdfProof, value) {
 			return
 		}
@@ -169,19 +168,19 @@ func (x *fastReflection_VirtualBlock) Has(fd protoreflect.FieldDescriptor) bool 
 	case "phoenix.phoenix.VirtualBlock.id":
 		return x.Id != uint64(0)
 	case "phoenix.phoenix.VirtualBlock.time":
-		return x.Time != uint64(0)
+		return x.Time != int64(0)
 	case "phoenix.phoenix.VirtualBlock.header":
-		return x.Header != ""
+		return len(x.Header) != 0
 	case "phoenix.phoenix.VirtualBlock.previous":
-		return x.Previous != ""
+		return len(x.Previous) != 0
 	case "phoenix.phoenix.VirtualBlock.parent":
-		return x.Parent != ""
+		return len(x.Parent) != 0
 	case "phoenix.phoenix.VirtualBlock.leftChild":
-		return x.LeftChild != ""
+		return len(x.LeftChild) != 0
 	case "phoenix.phoenix.VirtualBlock.rightChild":
-		return x.RightChild != ""
+		return len(x.RightChild) != 0
 	case "phoenix.phoenix.VirtualBlock.vdfProof":
-		return x.VdfProof != ""
+		return len(x.VdfProof) != 0
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: phoenix.phoenix.VirtualBlock"))
@@ -201,19 +200,19 @@ func (x *fastReflection_VirtualBlock) Clear(fd protoreflect.FieldDescriptor) {
 	case "phoenix.phoenix.VirtualBlock.id":
 		x.Id = uint64(0)
 	case "phoenix.phoenix.VirtualBlock.time":
-		x.Time = uint64(0)
+		x.Time = int64(0)
 	case "phoenix.phoenix.VirtualBlock.header":
-		x.Header = ""
+		x.Header = nil
 	case "phoenix.phoenix.VirtualBlock.previous":
-		x.Previous = ""
+		x.Previous = nil
 	case "phoenix.phoenix.VirtualBlock.parent":
-		x.Parent = ""
+		x.Parent = nil
 	case "phoenix.phoenix.VirtualBlock.leftChild":
-		x.LeftChild = ""
+		x.LeftChild = nil
 	case "phoenix.phoenix.VirtualBlock.rightChild":
-		x.RightChild = ""
+		x.RightChild = nil
 	case "phoenix.phoenix.VirtualBlock.vdfProof":
-		x.VdfProof = ""
+		x.VdfProof = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: phoenix.phoenix.VirtualBlock"))
@@ -235,25 +234,25 @@ func (x *fastReflection_VirtualBlock) Get(descriptor protoreflect.FieldDescripto
 		return protoreflect.ValueOfUint64(value)
 	case "phoenix.phoenix.VirtualBlock.time":
 		value := x.Time
-		return protoreflect.ValueOfUint64(value)
+		return protoreflect.ValueOfInt64(value)
 	case "phoenix.phoenix.VirtualBlock.header":
 		value := x.Header
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "phoenix.phoenix.VirtualBlock.previous":
 		value := x.Previous
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "phoenix.phoenix.VirtualBlock.parent":
 		value := x.Parent
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "phoenix.phoenix.VirtualBlock.leftChild":
 		value := x.LeftChild
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "phoenix.phoenix.VirtualBlock.rightChild":
 		value := x.RightChild
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	case "phoenix.phoenix.VirtualBlock.vdfProof":
 		value := x.VdfProof
-		return protoreflect.ValueOfString(value)
+		return protoreflect.ValueOfBytes(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: phoenix.phoenix.VirtualBlock"))
@@ -277,19 +276,19 @@ func (x *fastReflection_VirtualBlock) Set(fd protoreflect.FieldDescriptor, value
 	case "phoenix.phoenix.VirtualBlock.id":
 		x.Id = value.Uint()
 	case "phoenix.phoenix.VirtualBlock.time":
-		x.Time = value.Uint()
+		x.Time = value.Int()
 	case "phoenix.phoenix.VirtualBlock.header":
-		x.Header = value.Interface().(string)
+		x.Header = value.Bytes()
 	case "phoenix.phoenix.VirtualBlock.previous":
-		x.Previous = value.Interface().(string)
+		x.Previous = value.Bytes()
 	case "phoenix.phoenix.VirtualBlock.parent":
-		x.Parent = value.Interface().(string)
+		x.Parent = value.Bytes()
 	case "phoenix.phoenix.VirtualBlock.leftChild":
-		x.LeftChild = value.Interface().(string)
+		x.LeftChild = value.Bytes()
 	case "phoenix.phoenix.VirtualBlock.rightChild":
-		x.RightChild = value.Interface().(string)
+		x.RightChild = value.Bytes()
 	case "phoenix.phoenix.VirtualBlock.vdfProof":
-		x.VdfProof = value.Interface().(string)
+		x.VdfProof = value.Bytes()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: phoenix.phoenix.VirtualBlock"))
@@ -342,19 +341,19 @@ func (x *fastReflection_VirtualBlock) NewField(fd protoreflect.FieldDescriptor) 
 	case "phoenix.phoenix.VirtualBlock.id":
 		return protoreflect.ValueOfUint64(uint64(0))
 	case "phoenix.phoenix.VirtualBlock.time":
-		return protoreflect.ValueOfUint64(uint64(0))
+		return protoreflect.ValueOfInt64(int64(0))
 	case "phoenix.phoenix.VirtualBlock.header":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "phoenix.phoenix.VirtualBlock.previous":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "phoenix.phoenix.VirtualBlock.parent":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "phoenix.phoenix.VirtualBlock.leftChild":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "phoenix.phoenix.VirtualBlock.rightChild":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	case "phoenix.phoenix.VirtualBlock.vdfProof":
-		return protoreflect.ValueOfString("")
+		return protoreflect.ValueOfBytes(nil)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: phoenix.phoenix.VirtualBlock"))
@@ -617,7 +616,7 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.Time |= uint64(b&0x7F) << shift
+					x.Time |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -626,7 +625,7 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -636,29 +635,31 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Header = string(dAtA[iNdEx:postIndex])
+				x.Header = append(x.Header[:0], dAtA[iNdEx:postIndex]...)
+				if x.Header == nil {
+					x.Header = []byte{}
+				}
 				iNdEx = postIndex
 			case 4:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Previous", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -668,29 +669,31 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Previous = string(dAtA[iNdEx:postIndex])
+				x.Previous = append(x.Previous[:0], dAtA[iNdEx:postIndex]...)
+				if x.Previous == nil {
+					x.Previous = []byte{}
+				}
 				iNdEx = postIndex
 			case 5:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Parent", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -700,29 +703,31 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Parent = string(dAtA[iNdEx:postIndex])
+				x.Parent = append(x.Parent[:0], dAtA[iNdEx:postIndex]...)
+				if x.Parent == nil {
+					x.Parent = []byte{}
+				}
 				iNdEx = postIndex
 			case 6:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field LeftChild", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -732,29 +737,31 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.LeftChild = string(dAtA[iNdEx:postIndex])
+				x.LeftChild = append(x.LeftChild[:0], dAtA[iNdEx:postIndex]...)
+				if x.LeftChild == nil {
+					x.LeftChild = []byte{}
+				}
 				iNdEx = postIndex
 			case 7:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field RightChild", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -764,29 +771,31 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.RightChild = string(dAtA[iNdEx:postIndex])
+				x.RightChild = append(x.RightChild[:0], dAtA[iNdEx:postIndex]...)
+				if x.RightChild == nil {
+					x.RightChild = []byte{}
+				}
 				iNdEx = postIndex
 			case 8:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field VdfProof", wireType)
 				}
-				var stringLen uint64
+				var byteLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -796,23 +805,25 @@ func (x *fastReflection_VirtualBlock) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					byteLen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if byteLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + byteLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.VdfProof = string(dAtA[iNdEx:postIndex])
+				x.VdfProof = append(x.VdfProof[:0], dAtA[iNdEx:postIndex]...)
+				if x.VdfProof == nil {
+					x.VdfProof = []byte{}
+				}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -868,13 +879,13 @@ type VirtualBlock struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id         uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Time       uint64 `protobuf:"varint,2,opt,name=time,proto3" json:"time,omitempty"`
-	Header     string `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
-	Previous   string `protobuf:"bytes,4,opt,name=previous,proto3" json:"previous,omitempty"`
-	Parent     string `protobuf:"bytes,5,opt,name=parent,proto3" json:"parent,omitempty"`
-	LeftChild  string `protobuf:"bytes,6,opt,name=leftChild,proto3" json:"leftChild,omitempty"`
-	RightChild string `protobuf:"bytes,7,opt,name=rightChild,proto3" json:"rightChild,omitempty"`
-	VdfProof   string `protobuf:"bytes,8,opt,name=vdfProof,proto3" json:"vdfProof,omitempty"`
+	Time       int64  `protobuf:"varint,2,opt,name=time,proto3" json:"time,omitempty"`
+	Header     []byte `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
+	Previous   []byte `protobuf:"bytes,4,opt,name=previous,proto3" json:"previous,omitempty"`
+	Parent     []byte `protobuf:"bytes,5,opt,name=parent,proto3" json:"parent,omitempty"`
+	LeftChild  []byte `protobuf:"bytes,6,opt,name=leftChild,proto3" json:"leftChild,omitempty"`
+	RightChild []byte `protobuf:"bytes,7,opt,name=rightChild,proto3" json:"rightChild,omitempty"`
+	VdfProof   []byte `protobuf:"bytes,8,opt,name=vdfProof,proto3" json:"vdfProof,omitempty"`
 }
 
 func (x *VirtualBlock) Reset() {
@@ -904,53 +915,53 @@ func (x *VirtualBlock) GetId() uint64 {
 	return 0
 }
 
-func (x *VirtualBlock) GetTime() uint64 {
+func (x *VirtualBlock) GetTime() int64 {
 	if x != nil {
 		return x.Time
 	}
 	return 0
 }
 
-func (x *VirtualBlock) GetHeader() string {
+func (x *VirtualBlock) GetHeader() []byte {
 	if x != nil {
 		return x.Header
 	}
-	return ""
+	return nil
 }
 
-func (x *VirtualBlock) GetPrevious() string {
+func (x *VirtualBlock) GetPrevious() []byte {
 	if x != nil {
 		return x.Previous
 	}
-	return ""
+	return nil
 }
 
-func (x *VirtualBlock) GetParent() string {
+func (x *VirtualBlock) GetParent() []byte {
 	if x != nil {
 		return x.Parent
 	}
-	return ""
+	return nil
 }
 
-func (x *VirtualBlock) GetLeftChild() string {
+func (x *VirtualBlock) GetLeftChild() []byte {
 	if x != nil {
 		return x.LeftChild
 	}
-	return ""
+	return nil
 }
 
-func (x *VirtualBlock) GetRightChild() string {
+func (x *VirtualBlock) GetRightChild() []byte {
 	if x != nil {
 		return x.RightChild
 	}
-	return ""
+	return nil
 }
 
-func (x *VirtualBlock) GetVdfProof() string {
+func (x *VirtualBlock) GetVdfProof() []byte {
 	if x != nil {
 		return x.VdfProof
 	}
-	return ""
+	return nil
 }
 
 var File_phoenix_phoenix_virtual_block_proto protoreflect.FileDescriptor
@@ -962,17 +973,17 @@ var file_phoenix_phoenix_virtual_block_proto_rawDesc = []byte{
 	0x68, 0x6f, 0x65, 0x6e, 0x69, 0x78, 0x22, 0xd8, 0x01, 0x0a, 0x0c, 0x56, 0x69, 0x72, 0x74, 0x75,
 	0x61, 0x6c, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x68,
-	0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x68, 0x65, 0x61,
+	0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x68,
+	0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x06, 0x68, 0x65, 0x61,
 	0x64, 0x65, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x65, 0x76, 0x69, 0x6f, 0x75, 0x73, 0x18,
-	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x65, 0x76, 0x69, 0x6f, 0x75, 0x73, 0x12,
-	0x16, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x65, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08, 0x70, 0x72, 0x65, 0x76, 0x69, 0x6f, 0x75, 0x73, 0x12,
+	0x16, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x65, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0c, 0x52,
 	0x06, 0x70, 0x61, 0x72, 0x65, 0x6e, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x65, 0x66, 0x74, 0x43,
-	0x68, 0x69, 0x6c, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6c, 0x65, 0x66, 0x74,
+	0x68, 0x69, 0x6c, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x6c, 0x65, 0x66, 0x74,
 	0x43, 0x68, 0x69, 0x6c, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x72, 0x69, 0x67, 0x68, 0x74, 0x43, 0x68,
-	0x69, 0x6c, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x69, 0x67, 0x68, 0x74,
+	0x69, 0x6c, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a, 0x72, 0x69, 0x67, 0x68, 0x74,
 	0x43, 0x68, 0x69, 0x6c, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x76, 0x64, 0x66, 0x50, 0x72, 0x6f, 0x6f,
-	0x66, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x76, 0x64, 0x66, 0x50, 0x72, 0x6f, 0x6f,
+	0x66, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08, 0x76, 0x64, 0x66, 0x50, 0x72, 0x6f, 0x6f,
 	0x66, 0x42, 0xa7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x70, 0x68, 0x6f, 0x65, 0x6e, 0x69,
 	0x78, 0x2e, 0x70, 0x68, 0x6f, 0x65, 0x6e, 0x69, 0x78, 0x42, 0x11, 0x56, 0x69, 0x72, 0x74, 0x75,
 	0x61, 0x6c, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x20,

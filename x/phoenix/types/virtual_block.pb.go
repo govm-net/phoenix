@@ -5,11 +5,10 @@ package types
 
 import (
 	fmt "fmt"
+	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
-
-	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -25,13 +24,13 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type VirtualBlock struct {
 	Id         uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Time       uint64 `protobuf:"varint,2,opt,name=time,proto3" json:"time,omitempty"`
-	Header     string `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
-	Previous   string `protobuf:"bytes,4,opt,name=previous,proto3" json:"previous,omitempty"`
-	Parent     string `protobuf:"bytes,5,opt,name=parent,proto3" json:"parent,omitempty"`
-	LeftChild  string `protobuf:"bytes,6,opt,name=leftChild,proto3" json:"leftChild,omitempty"`
-	RightChild string `protobuf:"bytes,7,opt,name=rightChild,proto3" json:"rightChild,omitempty"`
-	VdfProof   string `protobuf:"bytes,8,opt,name=vdfProof,proto3" json:"vdfProof,omitempty"`
+	Time       int64  `protobuf:"varint,2,opt,name=time,proto3" json:"time,omitempty"`
+	Header     []byte `protobuf:"bytes,3,opt,name=header,proto3" json:"header,omitempty"`
+	Previous   []byte `protobuf:"bytes,4,opt,name=previous,proto3" json:"previous,omitempty"`
+	Parent     []byte `protobuf:"bytes,5,opt,name=parent,proto3" json:"parent,omitempty"`
+	LeftChild  []byte `protobuf:"bytes,6,opt,name=leftChild,proto3" json:"leftChild,omitempty"`
+	RightChild []byte `protobuf:"bytes,7,opt,name=rightChild,proto3" json:"rightChild,omitempty"`
+	VdfProof   []byte `protobuf:"bytes,8,opt,name=vdfProof,proto3" json:"vdfProof,omitempty"`
 }
 
 func (m *VirtualBlock) Reset()         { *m = VirtualBlock{} }
@@ -74,53 +73,53 @@ func (m *VirtualBlock) GetId() uint64 {
 	return 0
 }
 
-func (m *VirtualBlock) GetTime() uint64 {
+func (m *VirtualBlock) GetTime() int64 {
 	if m != nil {
 		return m.Time
 	}
 	return 0
 }
 
-func (m *VirtualBlock) GetHeader() string {
+func (m *VirtualBlock) GetHeader() []byte {
 	if m != nil {
 		return m.Header
 	}
-	return ""
+	return nil
 }
 
-func (m *VirtualBlock) GetPrevious() string {
+func (m *VirtualBlock) GetPrevious() []byte {
 	if m != nil {
 		return m.Previous
 	}
-	return ""
+	return nil
 }
 
-func (m *VirtualBlock) GetParent() string {
+func (m *VirtualBlock) GetParent() []byte {
 	if m != nil {
 		return m.Parent
 	}
-	return ""
+	return nil
 }
 
-func (m *VirtualBlock) GetLeftChild() string {
+func (m *VirtualBlock) GetLeftChild() []byte {
 	if m != nil {
 		return m.LeftChild
 	}
-	return ""
+	return nil
 }
 
-func (m *VirtualBlock) GetRightChild() string {
+func (m *VirtualBlock) GetRightChild() []byte {
 	if m != nil {
 		return m.RightChild
 	}
-	return ""
+	return nil
 }
 
-func (m *VirtualBlock) GetVdfProof() string {
+func (m *VirtualBlock) GetVdfProof() []byte {
 	if m != nil {
 		return m.VdfProof
 	}
-	return ""
+	return nil
 }
 
 func init() {
@@ -132,24 +131,24 @@ func init() {
 }
 
 var fileDescriptor_79cb14bfe5d87f6c = []byte{
-	// 264 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0x86, 0xb3, 0x31, 0xc6, 0x76, 0x11, 0x85, 0x3d, 0xc8, 0x22, 0xb2, 0x14, 0xbd, 0x14, 0xc4,
-	0xf4, 0xe0, 0x1b, 0x54, 0xbc, 0x4b, 0x0f, 0x1e, 0xbc, 0x48, 0xd2, 0x6c, 0xb2, 0x83, 0x49, 0x66,
-	0xd9, 0x6e, 0x82, 0xbe, 0x85, 0x8f, 0xe5, 0xb1, 0xc7, 0x1e, 0x25, 0x79, 0x11, 0xc9, 0x26, 0x6d,
-	0x3d, 0xcd, 0xfc, 0xff, 0x37, 0xc3, 0x0f, 0x3f, 0xbd, 0xd3, 0x0a, 0x65, 0x05, 0x9f, 0x8b, 0xfd,
-	0x6c, 0xc0, 0xd8, 0x3a, 0x2e, 0xde, 0x93, 0x02, 0xd7, 0x1f, 0x91, 0x36, 0x68, 0x91, 0x5d, 0x8e,
-	0x30, 0x1a, 0xe7, 0xed, 0x8e, 0xd0, 0xf3, 0xd7, 0xe1, 0x70, 0xd9, 0xdf, 0xb1, 0x0b, 0xea, 0x43,
-	0xca, 0xc9, 0x8c, 0xcc, 0x83, 0x95, 0x0f, 0x29, 0x63, 0x34, 0xb0, 0x50, 0x4a, 0xee, 0x3b, 0xc7,
-	0xed, 0xec, 0x8a, 0x86, 0x4a, 0xc6, 0xa9, 0x34, 0xfc, 0x64, 0x46, 0xe6, 0xd3, 0xd5, 0xa8, 0xd8,
-	0x35, 0x9d, 0x68, 0x23, 0x1b, 0xc0, 0x7a, 0xc3, 0x03, 0x47, 0x0e, 0xba, 0xff, 0xd1, 0xb1, 0x91,
-	0x95, 0xe5, 0xa7, 0xc3, 0xcf, 0xa0, 0xd8, 0x0d, 0x9d, 0x16, 0x32, 0xb3, 0x4f, 0x0a, 0x8a, 0x94,
-	0x87, 0x0e, 0x1d, 0x0d, 0x26, 0x28, 0x35, 0x90, 0xab, 0x11, 0x9f, 0x39, 0xfc, 0xcf, 0xe9, 0x13,
-	0x9b, 0x34, 0x7b, 0x31, 0x88, 0x19, 0x9f, 0x0c, 0x89, 0x7b, 0xbd, 0x7c, 0xfe, 0x69, 0x05, 0xd9,
-	0xb6, 0x82, 0xfc, 0xb6, 0x82, 0x7c, 0x77, 0xc2, 0xdb, 0x76, 0xc2, 0xdb, 0x75, 0xc2, 0x7b, 0xbb,
-	0xcf, 0xc1, 0xaa, 0x3a, 0x89, 0xd6, 0x58, 0x2e, 0x72, 0x6c, 0xca, 0x87, 0x4a, 0xda, 0x43, 0x6d,
-	0xc7, 0x02, 0xed, 0x97, 0x96, 0x9b, 0x24, 0x74, 0xcd, 0x3d, 0xfe, 0x05, 0x00, 0x00, 0xff, 0xff,
-	0x99, 0x15, 0x05, 0x9d, 0x60, 0x01, 0x00, 0x00,
+	// 266 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0xcf, 0x4a, 0xc4, 0x30,
+	0x10, 0x87, 0x9b, 0x6e, 0xad, 0x6b, 0x58, 0x14, 0x72, 0x90, 0x20, 0x12, 0x8a, 0x5e, 0x0a, 0x62,
+	0xf7, 0xe0, 0x1b, 0xac, 0x78, 0x97, 0x1e, 0x3c, 0x78, 0x91, 0x76, 0x9b, 0x36, 0xc1, 0xb6, 0x13,
+	0xb2, 0x69, 0xd1, 0xb7, 0xf0, 0xb1, 0x3c, 0xee, 0x71, 0x8f, 0xd2, 0xbe, 0x88, 0x34, 0xed, 0xfe,
+	0x39, 0xcd, 0x7c, 0xf3, 0xcd, 0x30, 0xf0, 0xc3, 0xf7, 0x4a, 0x00, 0xaf, 0xe5, 0xd7, 0x72, 0x5f,
+	0x5b, 0xa9, 0x4d, 0x93, 0x94, 0x1f, 0x69, 0x09, 0xeb, 0xcf, 0x48, 0x69, 0x30, 0x40, 0xae, 0x26,
+	0x19, 0x4d, 0xf5, 0x6e, 0x87, 0xf0, 0xe2, 0x6d, 0x5c, 0x5c, 0x0d, 0x7b, 0xe4, 0x12, 0xbb, 0x32,
+	0xa3, 0x28, 0x40, 0xa1, 0x17, 0xbb, 0x32, 0x23, 0x04, 0x7b, 0x46, 0x56, 0x9c, 0xba, 0x01, 0x0a,
+	0x67, 0xb1, 0xed, 0xc9, 0x35, 0xf6, 0x05, 0x4f, 0x32, 0xae, 0xe9, 0x2c, 0x40, 0xe1, 0x22, 0x9e,
+	0x88, 0xdc, 0xe0, 0xb9, 0xd2, 0xbc, 0x95, 0xd0, 0x6c, 0xa8, 0x67, 0xcd, 0x81, 0x87, 0x1b, 0x95,
+	0x68, 0x5e, 0x1b, 0x7a, 0x36, 0xde, 0x8c, 0x44, 0x6e, 0xf1, 0x45, 0xc9, 0x73, 0xf3, 0x2c, 0x64,
+	0x99, 0x51, 0xdf, 0xaa, 0xe3, 0x80, 0x30, 0x8c, 0xb5, 0x2c, 0xc4, 0xa4, 0xcf, 0xad, 0x3e, 0x99,
+	0x0c, 0x1f, 0xdb, 0x2c, 0x7f, 0xd5, 0x00, 0x39, 0x9d, 0x8f, 0x1f, 0xf7, 0xbc, 0x7a, 0xf9, 0xed,
+	0x18, 0xda, 0x76, 0x0c, 0xfd, 0x75, 0x0c, 0xfd, 0xf4, 0xcc, 0xd9, 0xf6, 0xcc, 0xd9, 0xf5, 0xcc,
+	0x79, 0x7f, 0x28, 0xa4, 0x11, 0x4d, 0x1a, 0xad, 0xa1, 0x5a, 0x16, 0xd0, 0x56, 0x8f, 0x35, 0x37,
+	0x87, 0xd8, 0x8e, 0x01, 0x9a, 0x6f, 0xc5, 0x37, 0xa9, 0x6f, 0x93, 0x7b, 0xfa, 0x0f, 0x00, 0x00,
+	0xff, 0xff, 0x87, 0xbd, 0x11, 0x80, 0x60, 0x01, 0x00, 0x00,
 }
 
 func (m *VirtualBlock) Marshal() (dAtA []byte, err error) {
@@ -345,7 +344,7 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Time |= uint64(b&0x7F) << shift
+				m.Time |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -354,7 +353,7 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -364,29 +363,31 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Header = string(dAtA[iNdEx:postIndex])
+			m.Header = append(m.Header[:0], dAtA[iNdEx:postIndex]...)
+			if m.Header == nil {
+				m.Header = []byte{}
+			}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Previous", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -396,29 +397,31 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Previous = string(dAtA[iNdEx:postIndex])
+			m.Previous = append(m.Previous[:0], dAtA[iNdEx:postIndex]...)
+			if m.Previous == nil {
+				m.Previous = []byte{}
+			}
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Parent", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -428,29 +431,31 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Parent = string(dAtA[iNdEx:postIndex])
+			m.Parent = append(m.Parent[:0], dAtA[iNdEx:postIndex]...)
+			if m.Parent == nil {
+				m.Parent = []byte{}
+			}
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LeftChild", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -460,29 +465,31 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.LeftChild = string(dAtA[iNdEx:postIndex])
+			m.LeftChild = append(m.LeftChild[:0], dAtA[iNdEx:postIndex]...)
+			if m.LeftChild == nil {
+				m.LeftChild = []byte{}
+			}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RightChild", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -492,29 +499,31 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RightChild = string(dAtA[iNdEx:postIndex])
+			m.RightChild = append(m.RightChild[:0], dAtA[iNdEx:postIndex]...)
+			if m.RightChild == nil {
+				m.RightChild = []byte{}
+			}
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field VdfProof", wireType)
 			}
-			var stringLen uint64
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVirtualBlock
@@ -524,23 +533,25 @@ func (m *VirtualBlock) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if byteLen < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthVirtualBlock
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.VdfProof = string(dAtA[iNdEx:postIndex])
+			m.VdfProof = append(m.VdfProof[:0], dAtA[iNdEx:postIndex]...)
+			if m.VdfProof == nil {
+				m.VdfProof = []byte{}
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

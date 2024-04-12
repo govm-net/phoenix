@@ -19262,71 +19262,6 @@ paths:
               parameters.
       tags:
         - Msg
-  /phoenix.phoenix.Msg/UpdateParams:
-    post:
-      summary: |-
-        UpdateParams defines a (governance) operation for updating the module
-        parameters. The authority defaults to the x/gov module account.
-      operationId: PhoenixPhoenixMsg_UpdateParams
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            description: >-
-              MsgUpdateParamsResponse defines the response structure for
-              executing a
-
-              MsgUpdateParams message.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: body
-          description: MsgUpdateParams is the Msg/UpdateParams request type.
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              authority:
-                type: string
-                description: >-
-                  authority is the address that controls the module (defaults to
-                  x/gov unless overwritten).
-              params:
-                description: |-
-                  params defines the module parameters to update.
-
-                  NOTE: All parameters must be supplied.
-                type: object
-                properties:
-                  shardId:
-                    type: string
-                    format: uint64
-                  proxy:
-                    type: string
-                  vdf:
-                    type: string
-                    format: uint64
-            description: MsgUpdateParams is the Msg/UpdateParams request type.
-      tags:
-        - Msg
   /govm-net/phoenix/phoenix/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -19391,19 +19326,25 @@ paths:
                       format: uint64
                     time:
                       type: string
-                      format: uint64
+                      format: int64
                     header:
                       type: string
+                      format: byte
                     previous:
                       type: string
+                      format: byte
                     parent:
                       type: string
+                      format: byte
                     leftChild:
                       type: string
+                      format: byte
                     rightChild:
                       type: string
+                      format: byte
                     vdfProof:
                       type: string
+                      format: byte
               pagination:
                 type: object
                 properties:
@@ -19527,19 +19468,25 @@ paths:
                     format: uint64
                   time:
                     type: string
-                    format: uint64
+                    format: int64
                   header:
                     type: string
+                    format: byte
                   previous:
                     type: string
+                    format: byte
                   parent:
                     type: string
+                    format: byte
                   leftChild:
                     type: string
+                    format: byte
                   rightChild:
                     type: string
+                    format: byte
                   vdfProof:
                     type: string
+                    format: byte
         default:
           description: An unexpected error response.
           schema:
@@ -19566,6 +19513,71 @@ paths:
           format: uint64
       tags:
         - Query
+  /phoenix.phoenix.Msg/UpdateParams:
+    post:
+      summary: |-
+        UpdateParams defines a (governance) operation for updating the module
+        parameters. The authority defaults to the x/gov module account.
+      operationId: PhoenixPhoenixMsg_UpdateParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            description: >-
+              MsgUpdateParamsResponse defines the response structure for
+              executing a
+
+              MsgUpdateParams message.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          description: MsgUpdateParams is the Msg/UpdateParams request type.
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              authority:
+                type: string
+                description: >-
+                  authority is the address that controls the module (defaults to
+                  x/gov unless overwritten).
+              params:
+                description: |-
+                  params defines the module parameters to update.
+
+                  NOTE: All parameters must be supplied.
+                type: object
+                properties:
+                  shardId:
+                    type: string
+                    format: uint64
+                  proxy:
+                    type: string
+                  vdf:
+                    type: string
+                    format: uint64
+            description: MsgUpdateParams is the Msg/UpdateParams request type.
+      tags:
+        - Msg
 definitions:
   cosmos.auth.v1beta1.MsgUpdateParams:
     type: object
@@ -27306,47 +27318,6 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  phoenix.phoenix.MsgUpdateParams:
-    type: object
-    properties:
-      authority:
-        type: string
-        description: >-
-          authority is the address that controls the module (defaults to x/gov
-          unless overwritten).
-      params:
-        description: |-
-          params defines the module parameters to update.
-
-          NOTE: All parameters must be supplied.
-        type: object
-        properties:
-          shardId:
-            type: string
-            format: uint64
-          proxy:
-            type: string
-          vdf:
-            type: string
-            format: uint64
-    description: MsgUpdateParams is the Msg/UpdateParams request type.
-  phoenix.phoenix.MsgUpdateParamsResponse:
-    type: object
-    description: |-
-      MsgUpdateParamsResponse defines the response structure for executing a
-      MsgUpdateParams message.
-  phoenix.phoenix.Params:
-    type: object
-    properties:
-      shardId:
-        type: string
-        format: uint64
-      proxy:
-        type: string
-      vdf:
-        type: string
-        format: uint64
-    description: Params defines the parameters for the module.
   cosmos.base.query.v1beta1.PageRequest:
     type: object
     properties:
@@ -27424,6 +27395,18 @@ definitions:
                repeated Bar results = 1;
                PageResponse page = 2;
        }
+  phoenix.phoenix.Params:
+    type: object
+    properties:
+      shardId:
+        type: string
+        format: uint64
+      proxy:
+        type: string
+      vdf:
+        type: string
+        format: uint64
+    description: Params defines the parameters for the module.
   phoenix.phoenix.QueryAllVirtualBlockResponse:
     type: object
     properties:
@@ -27437,19 +27420,25 @@ definitions:
               format: uint64
             time:
               type: string
-              format: uint64
+              format: int64
             header:
               type: string
+              format: byte
             previous:
               type: string
+              format: byte
             parent:
               type: string
+              format: byte
             leftChild:
               type: string
+              format: byte
             rightChild:
               type: string
+              format: byte
             vdfProof:
               type: string
+              format: byte
       pagination:
         type: object
         properties:
@@ -27487,19 +27476,25 @@ definitions:
             format: uint64
           time:
             type: string
-            format: uint64
+            format: int64
           header:
             type: string
+            format: byte
           previous:
             type: string
+            format: byte
           parent:
             type: string
+            format: byte
           leftChild:
             type: string
+            format: byte
           rightChild:
             type: string
+            format: byte
           vdfProof:
             type: string
+            format: byte
   phoenix.phoenix.QueryParamsResponse:
     type: object
     properties:
@@ -27524,16 +27519,51 @@ definitions:
         format: uint64
       time:
         type: string
-        format: uint64
+        format: int64
       header:
         type: string
+        format: byte
       previous:
         type: string
+        format: byte
       parent:
         type: string
+        format: byte
       leftChild:
         type: string
+        format: byte
       rightChild:
         type: string
+        format: byte
       vdfProof:
         type: string
+        format: byte
+  phoenix.phoenix.MsgUpdateParams:
+    type: object
+    properties:
+      authority:
+        type: string
+        description: >-
+          authority is the address that controls the module (defaults to x/gov
+          unless overwritten).
+      params:
+        description: |-
+          params defines the module parameters to update.
+
+          NOTE: All parameters must be supplied.
+        type: object
+        properties:
+          shardId:
+            type: string
+            format: uint64
+          proxy:
+            type: string
+          vdf:
+            type: string
+            format: uint64
+    description: MsgUpdateParams is the Msg/UpdateParams request type.
+  phoenix.phoenix.MsgUpdateParamsResponse:
+    type: object
+    description: |-
+      MsgUpdateParamsResponse defines the response structure for executing a
+      MsgUpdateParams message.

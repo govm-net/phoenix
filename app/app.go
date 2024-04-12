@@ -1,9 +1,11 @@
 package app
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"time"
 
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	"cosmossdk.io/depinject"
@@ -19,6 +21,8 @@ import (
 	_ "cosmossdk.io/x/nft/module" // import for side-effects
 	_ "cosmossdk.io/x/upgrade"    // import for side-effects
 	upgradekeeper "cosmossdk.io/x/upgrade/keeper"
+	"github.com/cometbft/cometbft/state"
+	"github.com/cometbft/cometbft/types"
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -317,6 +321,19 @@ func New(
 	// 	voteExtHandler.SetHandlers(bApp)
 	// }
 
+	propHandler := phoenixmodulekeeper.NewProposalHandler(
+		logger,
+		app.PhoenixKeeper,
+	)
+
+	baseAppOptions = append(baseAppOptions, func(ba *baseapp.BaseApp) {
+		ba.SetExtendVoteHandler(propHandler.ExtendVoteHandler())
+		ba.SetVerifyVoteExtensionHandler(propHandler.VerifyVoteExtensionHandler())
+		ba.SetPrepareProposal(propHandler.PrepareProposal())
+		ba.SetProcessProposal(propHandler.ProcessProposal())
+		ba.SetPreBlocker(propHandler.PreBlocker)
+	})
+
 	app.App = appBuilder.Build(db, traceStore, baseAppOptions...)
 
 	// Register legacy modules
@@ -350,6 +367,16 @@ func New(
 	// 	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.ModuleManager.GetVersionMap())
 	// 	return app.App.InitChainer(ctx, req)
 	// })
+
+	state.DefaultCaclBlockTimeFn = func(lastBlockTime time.Time, commit *types.Commit, validators *types.ValidatorSet) time.Time {
+		t := state.MedianTime(commit, validators)
+		max := lastBlockTime.Add(time.Second * 4)
+		if t.After(max) {
+			fmt.Println("change blockchain time:", t.String(), " to ", max.String())
+			return max
+		}
+		return t
+	}
 
 	if err := app.Load(loadLatest); err != nil {
 		return nil, err

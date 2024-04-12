@@ -5,12 +5,12 @@ option go_package = "github.com/govm-net/phoenix/x/phoenix/types";
 
 message VirtualBlock {
   uint64 id = 1;
-  uint64 time = 2; 
-  string header = 3; 
-  string previous = 4; 
-  string parent = 5; 
-  string leftChild = 6; 
-  string rightChild = 7; 
-  string vdfProof = 8; 
+  int64 time = 2; 
+  bytes header = 3; 
+  bytes previous = 4; 
+  bytes parent = 5; 
+  bytes leftChild = 6; 
+  bytes rightChild = 7; 
+  bytes vdfProof = 8; 
   
 }
