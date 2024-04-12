@@ -1,0 +1,16 @@
+syntax = "proto3";
+package phoenix.phoenix;
+
+option go_package = "github.com/govm-net/phoenix/x/phoenix/types";
+
+message VirtualBlock {
+  uint64 id = 1;
+  uint64 time = 2; 
+  string header = 3; 
+  string previous = 4; 
+  string parent = 5; 
+  string leftChild = 6; 
+  string rightChild = 7; 
+  string vdfProof = 8; 
+  
+}

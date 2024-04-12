@@ -17,6 +17,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod: "VirtualBlockAll",
+					Use:       "list-virtual-block",
+					Short:     "List all virtual_block",
+				},
+				{
+					RpcMethod:      "VirtualBlock",
+					Use:            "show-virtual-block [id]",
+					Short:          "Shows a virtual_block by id",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},

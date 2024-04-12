@@ -19,12 +19,47 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				VirtualBlockList: []types.VirtualBlock{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				VirtualBlockCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated virtualBlock",
+			genState: &types.GenesisState{
+				VirtualBlockList: []types.VirtualBlock{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid virtualBlock count",
+			genState: &types.GenesisState{
+				VirtualBlockList: []types.VirtualBlock{
+					{
+						Id: 1,
+					},
+				},
+				VirtualBlockCount: 0,
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	}

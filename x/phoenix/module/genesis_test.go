@@ -14,6 +14,15 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
+		VirtualBlockList: []types.VirtualBlock{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		VirtualBlockCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -25,5 +34,7 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
+	require.ElementsMatch(t, genesisState.VirtualBlockList, got.VirtualBlockList)
+	require.Equal(t, genesisState.VirtualBlockCount, got.VirtualBlockCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

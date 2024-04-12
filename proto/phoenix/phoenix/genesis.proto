@@ -1,17 +1,20 @@
 syntax = "proto3";
+
 package phoenix.phoenix;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "phoenix/phoenix/params.proto";
+import "phoenix/phoenix/virtual_block.proto";
 
 option go_package = "github.com/govm-net/phoenix/x/phoenix/types";
 
 // GenesisState defines the phoenix module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params       params            = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated VirtualBlock virtualBlockList  = 2 [(gogoproto.nullable) = false] ;
+           uint64       virtualBlockCount = 3;
 }
+
