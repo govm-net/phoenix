@@ -22,4 +22,5 @@ func KeyPrefix(p string) []byte {
 const (
 	VirtualBlockKey      = "VirtualBlock/value/"
 	VirtualBlockCountKey = "VirtualBlock/count/"
+	LastHeaderKey        = "LastHeader/value/"
 )

@@ -33,6 +33,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
+	"github.com/cosmos/cosmos-sdk/types/mempool"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	_ "github.com/cosmos/cosmos-sdk/x/auth" // import for side-effects
@@ -321,12 +322,14 @@ func New(
 	// 	voteExtHandler.SetHandlers(bApp)
 	// }
 
-	propHandler := phoenixmodulekeeper.NewProposalHandler(
-		logger,
-		app.PhoenixKeeper,
-	)
-
 	baseAppOptions = append(baseAppOptions, func(ba *baseapp.BaseApp) {
+		nonceMempool := mempool.NewSenderNonceMempool()
+		propHandler := phoenixmodulekeeper.NewProposalHandler(
+			logger,
+			app.PhoenixKeeper,
+			nonceMempool,
+			ba,
+		)
 		ba.SetExtendVoteHandler(propHandler.ExtendVoteHandler())
 		ba.SetVerifyVoteExtensionHandler(propHandler.VerifyVoteExtensionHandler())
 		ba.SetPrepareProposal(propHandler.PrepareProposal())

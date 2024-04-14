@@ -78,6 +78,19 @@ func (k Keeper) GetVirtualBlock(ctx context.Context, id uint64) (val types.Virtu
 	return val, true
 }
 
+// GetLastVirtualBlock returns last virtualBlock
+func (k Keeper) GetLastVirtualBlock(ctx context.Context) (val types.VirtualBlock, found bool) {
+	id := k.GetVirtualBlockCount(ctx) - 1
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.VirtualBlockKey))
+	b := store.Get(GetVirtualBlockIDBytes(id))
+	if b == nil {
+		return val, false
+	}
+	k.cdc.MustUnmarshal(b, &val)
+	return val, true
+}
+
 // RemoveVirtualBlock removes a virtualBlock from the store
 func (k Keeper) RemoveVirtualBlock(ctx context.Context, id uint64) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))

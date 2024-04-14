@@ -1,47 +1,49 @@
 package keeper
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 
 	"cosmossdk.io/log"
+	"cosmossdk.io/store/prefix"
 	abci "github.com/cometbft/cometbft/abci/types"
-	"github.com/cometbft/cometbft/crypto/tmhash"
+	"github.com/cosmos/cosmos-sdk/baseapp"
+	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/mempool"
 	"github.com/govm-net/phoenix/x/phoenix/types"
 )
 
 const virtualBlockInterval = 10
 
 type ProposalHandler struct {
-	logger log.Logger
-	keeper Keeper
+	defaultHandler *baseapp.DefaultProposalHandler
+	logger         log.Logger
+	keeper         Keeper
 }
 
-func NewProposalHandler(logger log.Logger, keeper Keeper) *ProposalHandler {
+func NewProposalHandler(logger log.Logger, keeper Keeper, mp mempool.Mempool, txVerifier baseapp.ProposalTxVerifier) *ProposalHandler {
 	return &ProposalHandler{
-		logger: logger,
-		keeper: keeper,
+		defaultHandler: baseapp.NewDefaultProposalHandler(mp, txVerifier),
+		logger:         logger,
+		keeper:         keeper,
 	}
-}
-
-func getHeaderHash(ctx sdk.Context) []byte {
-	h := ctx.BlockHeader()
-	hd, err := h.Marshal()
-	if err != nil {
-		return nil
-	}
-	return tmhash.Sum(hd)
 }
 
 func (h *ProposalHandler) PrepareProposal() sdk.PrepareProposalHandler {
 	return func(ctx sdk.Context, req *abci.RequestPrepareProposal) (*abci.ResponsePrepareProposal, error) {
-		proposalTxs := req.Txs
-		fmt.Println("--PrepareProposal--", req.Height)
+		h.logger.Debug("PrepareProposal", "height", req.Height)
 
-		lid := h.keeper.GetVirtualBlockCount(ctx) - 1
-		last, found := h.keeper.GetVirtualBlock(ctx, lid)
+		dfHandler := h.defaultHandler.PrepareProposalHandler()
+		resp, err := dfHandler(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+
+		last, found := h.keeper.GetLastVirtualBlock(ctx)
 		if !found {
 			return nil, errors.New("fail to get vitrual block")
 		}
@@ -50,12 +52,9 @@ func (h *ProposalHandler) PrepareProposal() sdk.PrepareProposalHandler {
 		vbTime := last.Time + virtualBlockInterval
 		if now <= vbTime {
 			fmt.Println("skip", now, vbTime, now-vbTime)
-			return &abci.ResponsePrepareProposal{
-				Txs: proposalTxs,
-			}, nil
+			return resp, nil
 		}
 		var vb types.VirtualBlock
-		var err error
 
 		vb.Time = vbTime
 
@@ -63,65 +62,89 @@ func (h *ProposalHandler) PrepareProposal() sdk.PrepareProposalHandler {
 		if err != nil {
 			return nil, err
 		}
-		vb.Header = getHeaderHash(ctx)
+		vb.Header = h.keeper.GetLastHeader(ctx)
+		// todo other attributes
 
 		bz, err := json.Marshal(vb)
 		if err != nil {
 			return nil, errors.New("failed to encode injected vote extension tx")
 		}
 
-		proposalTxs = append(proposalTxs, bz)
+		resp.Txs = append(resp.Txs, bz)
 
-		return &abci.ResponsePrepareProposal{
-			Txs: proposalTxs,
-		}, nil
+		return resp, nil
 	}
 }
 
 func (h *ProposalHandler) ProcessProposal() sdk.ProcessProposalHandler {
 	return func(ctx sdk.Context, req *abci.RequestProcessProposal) (*abci.ResponseProcessProposal, error) {
-		fmt.Println("--ProcessProposal--", req.Height)
+		h.logger.Debug("ProcessProposal", "height", req.Height)
+
+		last, found := h.keeper.GetLastVirtualBlock(ctx)
+		if !found {
+			h.logger.Error("not found virtual block", "height", req.Height)
+			return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, errors.New("fail to get vitrual block")
+		}
+
 		if len(req.Txs) == 0 {
+			if last.Time+virtualBlockInterval < req.Time.Unix() {
+				h.logger.Error("not found tx, virtual block time out", "height", req.Height)
+				return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, nil
+			}
 			return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_ACCEPT}, nil
 		}
 
 		var vb types.VirtualBlock
 		if err := json.Unmarshal(req.Txs[0], &vb); err != nil {
+			if last.Time+virtualBlockInterval < req.Time.Unix() {
+				return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, nil
+			}
 			h.logger.Error("failed to decode injected vote extension tx", "err", err)
 			return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_ACCEPT}, nil
 		}
+		if vb.Time != last.Time+virtualBlockInterval {
+			return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, nil
+		}
+		if !bytes.Equal(vb.Header, h.keeper.GetLastHeader(ctx)) {
+			return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, nil
+		}
+		if h.keeper.GetParams(ctx).ShardId == 1 {
+			if len(vb.Parent) != 0 {
+				return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_REJECT}, nil
+			}
+		}
+		// todo check other attributes
 
 		return &abci.ResponseProcessProposal{Status: abci.ResponseProcessProposal_ACCEPT}, nil
 	}
 }
 
 func (h *ProposalHandler) PreBlocker(ctx sdk.Context, req *abci.RequestFinalizeBlock) (*sdk.ResponsePreBlock, error) {
-	fmt.Println("--PreBlocker--", req.Height)
-	res := &sdk.ResponsePreBlock{}
-	var err error
-	defer func() {
-		res, err = h.checkBlock(ctx, req)
-	}()
+	h.logger.Debug("PreBlocker", "height", req.Height)
+
 	if len(req.Txs) == 0 {
-		return res, err
+		return h.checkBlock(ctx, req)
 	}
 
 	var vb types.VirtualBlock
 	if err := json.Unmarshal(req.Txs[0], &vb); err != nil {
-		return res, err
+		return h.checkBlock(ctx, req)
 	}
+	if !bytes.Equal(vb.Header, h.keeper.GetLastHeader(ctx)) {
+		return nil, errors.New("wrong header of virtual block")
+	}
+	// todo check other attributes
 
 	h.keeper.AppendVirtualBlock(ctx, vb)
 
-	return res, err
+	return h.checkBlock(ctx, req)
 }
 
 func (h *ProposalHandler) checkBlock(ctx sdk.Context, req *abci.RequestFinalizeBlock) (*sdk.ResponsePreBlock, error) {
 	res := &sdk.ResponsePreBlock{}
-	lid := h.keeper.GetVirtualBlockCount(ctx)
-	vb, found := h.keeper.GetVirtualBlock(ctx, lid-1)
+	vb, found := h.keeper.GetLastVirtualBlock(ctx)
 	if !found {
-		fmt.Println("not found the virtual block", lid-1)
+		fmt.Println("not found the virtual block")
 		return nil, errors.New("not found vitrual block")
 	}
 	now := req.Time.Unix()
@@ -141,4 +164,20 @@ func (h *ProposalHandler) VerifyVoteExtensionHandler() sdk.VerifyVoteExtensionHa
 	return func(ctx sdk.Context, req *abci.RequestVerifyVoteExtension) (*abci.ResponseVerifyVoteExtension, error) {
 		return &abci.ResponseVerifyVoteExtension{Status: abci.ResponseVerifyVoteExtension_ACCEPT}, nil
 	}
+}
+
+// GetVirtualBlockCount get the total number of virtualBlock
+func (k Keeper) GetLastHeader(ctx context.Context) []byte {
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, []byte{})
+	byteKey := types.KeyPrefix(types.LastHeaderKey)
+	return store.Get(byteKey)
+}
+
+// SetVirtualBlockCount set the total number of virtualBlock
+func (k Keeper) SetLastHeader(ctx context.Context, header []byte) {
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, []byte{})
+	byteKey := types.KeyPrefix(types.LastHeaderKey)
+	store.Set(byteKey, header)
 }
